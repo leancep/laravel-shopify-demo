@@ -16,7 +16,7 @@ This project demonstrates the integration of a Laravel 11 application with Shopi
 ### **Installation**
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo.git
+   git clone https://github.com/leancep/laravel-shopify-demo.git
    cd your-repo
    ```
 
@@ -70,7 +70,7 @@ This project demonstrates the integration of a Laravel 11 application with Shopi
 - **Controller:** `ProductController`
 - **Description:** List products stored in PostgreSQL with pagination.
 - **Pagination Parameters:**
-  - `per_page`: Number of products per page (default: 10).
+  - `quantity`: Number of products per page (default: 10).
   - `page`: Page number (default: 1).
 
 ### **3. Sync Products with Shopify**
@@ -89,13 +89,9 @@ php artisan test
 
 ### **2. Test Coverage**
 
-#### **ShopifyControllerTest**
+#### **ShopifyServicesTest**
 - Verifies that products are fetched from the Shopify API.
 - Uses mocks to simulate Shopify API responses.
-
-#### **ProductControllerTest**
-- Verifies that products are fetched from the database with pagination.
-- Ensures the structure of the JSON response is correct.
 
 #### **SyncShopifyProducts Command Test**
 - Confirms that the command syncs products from Shopify to the database.
@@ -109,5 +105,4 @@ php artisan test
 - **`app/Http/Controllers/ShopifyController.php`**: Fetches products from Shopify.
 - **`app/Http/Controllers/ProductController.php`**: Fetches products from the database with pagination.
 - **`app/Console/Commands/SyncShopifyProducts.php`**: Syncs products from Shopify to the local database.
-- **`tests/Feature`**: Contains feature tests for controllers.
 - **`tests/Unit`**: Contains unit tests for services.

@@ -1,7 +1,8 @@
 # Shopify Integration with Laravel
 
 ## **Overview**
-This project demonstrates the integration of a Laravel 11 application with Shopify's API. It includes features to fetch products from Shopify in real-time and store them in a PostgreSQL database with pagination support. Additionally, it implements testing for services.
+This project demonstrates the integration of a Laravel 11 application with Shopify's API. It includes features to fetch products from Shopify in real-time, store them in a PostgreSQL database with pagination support, and process product fetching through queued jobs. Additionally, it implements testing for services.
+
 
 ---
 
@@ -44,6 +45,8 @@ This project demonstrates the integration of a Laravel 11 application with Shopi
    SHOPIFY_API_SECRET=your-shopify-api-secret
    SHOPIFY_ACCESS_TOKEN=your-access-token
    SHOPIFY_SHOP_DOMAIN=your-store.myshopify.com
+
+   QUEUE_CONNECTION=database
    ```
 
 4. Run migrations to set up the database:
@@ -77,6 +80,13 @@ This project demonstrates the integration of a Laravel 11 application with Shopi
 - **Command:** `php artisan shopify:sync-products`
 - **Description:** Fetch products from Shopify and store/update them in the PostgreSQL database.
 
+### **4. Sync Products with Shopify via Queued Jobs**
+- **Command:** `php artisan shopify:fetch-products`
+- **Description:** Dispatch a queued job to fetch products from Shopify and store/update them in the PostgreSQL database.
+- **Queue Processing:** Start the queue worker with:
+  ```bash
+  php artisan queue:work
+  ```
 ---
 
 ## **Testing**
@@ -104,5 +114,7 @@ php artisan test
 - **`app/Services/ShopifyService.php`**: Handles Shopify API integration.
 - **`app/Http/Controllers/ShopifyController.php`**: Fetches products from Shopify.
 - **`app/Http/Controllers/ProductController.php`**: Fetches products from the database with pagination.
-- **`app/Console/Commands/SyncShopifyProducts.php`**: Syncs products from Shopify to the local database.
+- **`app/Console/Commands/SyncShopifyProducts.php`**: Syncs products from Shopify to the local database without queued job.
+- **`app/Console/Commands/DispatchShopifyProductsFetch.php`**: Dispatches a queued job to fetch products.
+- **`app/Jobs/FetchShopifyProducts.php`**: Processes the fetching and saving of products in the database.
 - **`tests/Unit`**: Contains unit tests for services.
